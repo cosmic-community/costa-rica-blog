@@ -77,7 +77,11 @@ export default function Hero({ featuredPost }: HeroProps) {
             {featuredPost.metadata.surf_conditions && (
               <div className="flex items-center gap-2">
                 <span>⭐</span>
-                <span>{featuredPost.metadata.surf_conditions.value || featuredPost.metadata.surf_conditions}</span>
+                <span>
+                  {typeof featuredPost.metadata.surf_conditions === 'string' 
+                    ? featuredPost.metadata.surf_conditions 
+                    : featuredPost.metadata.surf_conditions.value}
+                </span>
               </div>
             )}
           </div>

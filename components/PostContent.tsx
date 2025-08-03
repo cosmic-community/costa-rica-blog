@@ -86,7 +86,11 @@ export default function PostContent({ post }: PostContentProps) {
           {post.metadata.surf_conditions && (
             <div className="flex items-center gap-2">
               <span>⭐</span>
-              <span>{post.metadata.surf_conditions.value || post.metadata.surf_conditions}</span>
+              <span>
+                {typeof post.metadata.surf_conditions === 'string' 
+                  ? post.metadata.surf_conditions 
+                  : post.metadata.surf_conditions.value}
+              </span>
             </div>
           )}
         </div>

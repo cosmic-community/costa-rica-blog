@@ -118,7 +118,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/* Content */}
         <div className="prose prose-lg max-w-none">
-          <PostContent content={post.metadata?.content || ''} />
+          <PostContent post={post} />
         </div>
 
         {/* Footer */}

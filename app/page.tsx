@@ -20,7 +20,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-ocean-50 to-white">
       {/* Hero Section */}
-      {featuredPost && <Hero post={featuredPost} />}
+      {featuredPost && <Hero featuredPost={featuredPost} />}
 
       <div className="container mx-auto px-4 py-12">
         {/* Category Filter */}
