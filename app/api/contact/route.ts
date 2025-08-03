@@ -46,7 +46,7 @@ ${message}
           </div>
         </div>
       `,
-      reply_to: email,
+      replyTo: email,
     })
 
     if (emailResponse.error) {
