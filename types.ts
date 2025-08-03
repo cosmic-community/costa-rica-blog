@@ -55,6 +55,21 @@ export interface Category extends CosmicObject {
   };
 }
 
+export interface AboutPage extends CosmicObject {
+  type: 'about-pages';
+  metadata: {
+    subtitle?: string;
+    content?: string;
+    featured_image?: {
+      url: string;
+      imgix_url: string;
+    };
+    mission?: string;
+    vision?: string;
+    team_members?: string;
+  };
+}
+
 // Type literals for select-dropdown values
 export type SurfCondition = 'excellent' | 'good' | 'fair' | 'poor';
 
@@ -96,6 +111,10 @@ export function isAuthor(obj: CosmicObject): obj is Author {
 
 export function isCategory(obj: CosmicObject): obj is Category {
   return obj.type === 'categories';
+}
+
+export function isAboutPage(obj: CosmicObject): obj is AboutPage {
+  return obj.type === 'about-pages';
 }
 
 // Safe access helpers
