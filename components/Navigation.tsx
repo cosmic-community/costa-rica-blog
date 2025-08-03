@@ -1,111 +1,97 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
-import type { Category } from '@/types'
+import { useState } from 'react'
 
-interface NavigationProps {
-  categories: Category[]
-}
+export default function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-export default function Navigation({ categories }: NavigationProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   return (
-    <nav className="flex items-center">
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-6">
-        <Link href="/" className="text-gray-700 hover:text-ocean-600 transition-colors">
-          Home
-        </Link>
-        <Link href="/posts" className="text-gray-700 hover:text-ocean-600 transition-colors">
-          All Posts
-        </Link>
-        
-        {/* Categories Dropdown */}
-        <div className="relative group">
-          <button className="text-gray-700 hover:text-ocean-600 transition-colors flex items-center">
-            Categories
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/categories/${category.slug}`}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-ocean-600 transition-colors first:rounded-t-lg last:rounded-b-lg"
-              >
-                <span className="flex items-center">
-                  <span 
-                    className="w-3 h-3 rounded-full mr-2" 
-                    style={{ backgroundColor: category.metadata?.color || '#gray' }}
-                  ></span>
-                  {category.title}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+    <nav className="bg-white shadow-sm border-b border-gray-200">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo/Brand */}
+          <Link href="/" className="font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors">
+            Costa Rica Surf Blog
+          </Link>
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden text-gray-700 hover:text-ocean-600 transition-colors"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {isOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white border-b border-gray-200 md:hidden">
-          <div className="container mx-auto px-4 py-4 space-y-4">
-            <Link 
-              href="/" 
-              className="block text-gray-700 hover:text-ocean-600 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-8">
+            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Home
             </Link>
-            <Link 
-              href="/posts" 
-              className="block text-gray-700 hover:text-ocean-600 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+            <Link href="/posts" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               All Posts
             </Link>
-            
-            <div className="border-t border-gray-200 pt-4">
-              <h3 className="font-semibold text-gray-900 mb-2">Categories</h3>
-              {categories.map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/categories/${category.slug}`}
-                  className="block px-2 py-1 text-sm text-gray-700 hover:text-ocean-600 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className="flex items-center">
-                    <span 
-                      className="w-3 h-3 rounded-full mr-2" 
-                      style={{ backgroundColor: category.metadata?.color || '#gray' }}
-                    ></span>
-                    {category.title}
-                  </span>
-                </Link>
-              ))}
+            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              Contact
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="flex flex-col space-y-2">
+              <Link 
+                href="/" 
+                className="px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors font-medium rounded"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/posts" 
+                className="px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors font-medium rounded"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                All Posts
+              </Link>
+              <Link 
+                href="/contact" 
+                className="px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors font-medium rounded"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   )
 }

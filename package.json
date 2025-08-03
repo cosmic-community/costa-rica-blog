@@ -15,7 +15,8 @@
     "marked": "^14.1.2",
     "next": "15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@types/marked": "^6.0.0",
