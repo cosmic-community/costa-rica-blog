@@ -1,5 +1,5 @@
 import { cosmic } from '@/lib/cosmic'
-import type { CosmicObject } from '@/types'
+import type { CosmicObject, Author } from '@/types'
 
 interface AboutPage extends CosmicObject {
   type: 'about-pages';
@@ -12,16 +12,7 @@ interface AboutPage extends CosmicObject {
     };
     mission?: string;
     vision?: string;
-    team_members?: string;
-  };
-}
-
-interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  photo: {
-    imgix_url: string;
+    team_members?: Author[];
   };
 }
 
@@ -36,7 +27,8 @@ async function getAboutPage(): Promise<AboutPage | null> {
       .findOne({
         type: 'about-pages',
         slug: 'about'
-      });
+      })
+      .depth(1);
     
     return response.object as AboutPage;
   } catch (error) {
@@ -62,15 +54,8 @@ export default async function AboutPage() {
     );
   }
 
-  // Parse team members JSON
-  let teamMembers: TeamMember[] = [];
-  if (aboutPage.metadata.team_members) {
-    try {
-      teamMembers = JSON.parse(aboutPage.metadata.team_members);
-    } catch (error) {
-      console.error('Error parsing team members:', error);
-    }
-  }
+  // Get team members from the relationship
+  const teamMembers: Author[] = aboutPage.metadata.team_members || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -143,25 +128,53 @@ export default async function AboutPage() {
               Meet Our Team
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map((member, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="aspect-square overflow-hidden">
-                    <img
-                      src={`${member.photo.imgix_url}?w=400&h=400&fit=crop&auto=format,compress`}
-                      alt={member.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
+                    {member.metadata.profile_photo ? (
+                      <img
+                        src={`${member.metadata.profile_photo.imgix_url}?w=400&h=400&fit=crop&auto=format,compress`}
+                        alt={member.metadata.name || member.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-100 to-teal-100 flex items-center justify-center">
+                        <span className="text-6xl text-blue-400">👤</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {member.name}
+                      {member.metadata.name || member.title}
                     </h3>
-                    <p className="text-blue-600 font-medium mb-3">
-                      {member.role}
-                    </p>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {member.bio}
-                    </p>
+                    {member.metadata.role && (
+                      <p className="text-blue-600 font-medium mb-3">
+                        {member.metadata.role}
+                      </p>
+                    )}
+                    {member.metadata.bio && (
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        {member.metadata.bio}
+                      </p>
+                    )}
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      {member.metadata.years_surfing && (
+                        <span className="flex items-center">
+                          <span className="mr-1">🏄‍♂️</span>
+                          {member.metadata.years_surfing} years surfing
+                        </span>
+                      )}
+                      {member.metadata.instagram && (
+                        <a
+                          href={`https://instagram.com/${member.metadata.instagram.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                        >
+                          {member.metadata.instagram}
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

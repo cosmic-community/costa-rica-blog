@@ -36,6 +36,7 @@ export interface Author extends CosmicObject {
   type: 'authors';
   metadata: {
     name?: string;
+    role?: string;
     bio?: string;
     profile_photo?: {
       url: string;
@@ -66,7 +67,7 @@ export interface AboutPage extends CosmicObject {
     };
     mission?: string;
     vision?: string;
-    team_members?: string;
+    team_members?: Author[];
   };
 }
 
