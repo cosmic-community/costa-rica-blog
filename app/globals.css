@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-900;
+  }
+  
+  a {
+    @apply text-ocean-600 hover:text-ocean-700 transition-colors;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-ocean-600 text-white px-4 py-2 rounded-lg hover:bg-ocean-700 transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-sand-200 text-sand-800 px-4 py-2 rounded-lg hover:bg-sand-300 transition-colors;
+  }
+  
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden;
+  }
+  
+  .prose {
+    @apply max-w-none;
+  }
+  
+  .prose h1 {
+    @apply text-3xl font-bold mb-6 text-gray-900;
+  }
+  
+  .prose h2 {
+    @apply text-2xl font-semibold mb-4 mt-8 text-gray-900;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-semibold mb-3 mt-6 text-gray-900;
+  }
+  
+  .prose p {
+    @apply mb-4 leading-relaxed text-gray-700;
+  }
+  
+  .prose ul {
+    @apply mb-4 ml-6 list-disc;
+  }
+  
+  .prose ol {
+    @apply mb-4 ml-6 list-decimal;
+  }
+  
+  .prose li {
+    @apply mb-2 text-gray-700;
+  }
+  
+  .prose strong {
+    @apply font-semibold text-gray-900;
+  }
+  
+  .prose em {
+    @apply italic;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-ocean-300 pl-4 italic text-gray-600 my-4;
+  }
+  
+  .prose code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .prose pre {
+    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
