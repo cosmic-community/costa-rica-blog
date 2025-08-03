@@ -30,7 +30,8 @@ export default function Hero({ featuredPost }: HeroProps) {
             alt={featuredPost.metadata.title || featuredPost.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          {/* Stronger dark overlay for better text contrast */}
+          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
       )}
       
@@ -40,42 +41,42 @@ export default function Hero({ featuredPost }: HeroProps) {
           {/* Category Badge */}
           {featuredPost.metadata.category && (
             <div 
-              className="inline-block px-3 py-1 rounded-full text-sm font-medium mb-4"
+              className="inline-block px-3 py-1 rounded-full text-sm font-medium mb-4 text-white"
               style={{ backgroundColor: categoryColor }}
             >
               {featuredPost.metadata.category.metadata?.name || featuredPost.metadata.category.title}
             </div>
           )}
           
-          {/* Title */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          {/* Title with text shadow for better readability */}
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
             {featuredPost.metadata.title || featuredPost.title}
           </h1>
           
-          {/* Author and Wave Info */}
-          <div className="flex flex-wrap items-center gap-6 text-lg">
+          {/* Author and Wave Info with improved contrast */}
+          <div className="flex flex-wrap items-center gap-6 text-lg text-white drop-shadow-md">
             {featuredPost.metadata.author && (
               <div className="flex items-center gap-3">
                 {featuredPost.metadata.author.metadata?.profile_photo?.imgix_url && (
                   <img
                     src={`${featuredPost.metadata.author.metadata.profile_photo.imgix_url}?w=80&h=80&fit=crop&auto=format,compress`}
                     alt={featuredPost.metadata.author.metadata?.name || featuredPost.metadata.author.title}
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white"
                   />
                 )}
-                <span>{featuredPost.metadata.author.metadata?.name || featuredPost.metadata.author.title}</span>
+                <span className="font-medium">{featuredPost.metadata.author.metadata?.name || featuredPost.metadata.author.title}</span>
               </div>
             )}
             
             {featuredPost.metadata.wave_height && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 font-medium">
                 <span>🌊</span>
                 <span>{featuredPost.metadata.wave_height}</span>
               </div>
             )}
             
             {featuredPost.metadata.surf_conditions && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 font-medium">
                 <span>⭐</span>
                 <span>
                   {typeof featuredPost.metadata.surf_conditions === 'string' 
@@ -90,7 +91,7 @@ export default function Hero({ featuredPost }: HeroProps) {
           <div className="mt-8">
             <a
               href={`/posts/${featuredPost.slug}`}
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors shadow-lg"
             >
               Read Full Story
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
