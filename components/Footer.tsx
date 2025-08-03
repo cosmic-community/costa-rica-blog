@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -13,6 +15,33 @@ export default function Footer() {
           <p className="text-gray-600 mb-4">
             Your ultimate guide to surfing in Costa Rica
           </p>
+          
+          <div className="flex justify-center space-x-6 mb-4">
+            <Link 
+              href="/"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            >
+              Home
+            </Link>
+            <Link 
+              href="/posts"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            >
+              Posts
+            </Link>
+            <Link 
+              href="/about"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            >
+              About
+            </Link>
+            <Link 
+              href="/contact"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            >
+              Contact
+            </Link>
+          </div>
           
           <div className="text-sm text-gray-500">
             <p>¡Pura Vida! 🤙</p>
